@@ -20,37 +20,37 @@ If you are not using the CLI, follow the steps in the section [Installing Withou
 
 #JavaScript Usage
 In your 'deviceready' handler, set up your Analytics tracker:
-* `GoogleAnalytics.startTrackerWithId('UA-XXXX-YY')` where UA-XXXX-YY is your Google Analytics Mobile App property
+* `GA.startTrackerWithId('UA-XXXX-YY')` where UA-XXXX-YY is your Google Analytics Mobile App property
 
 To track a Screen (PageView):
-* `GoogleAnalytics.trackView('Screen Title')`
+* `GA.trackView('Screen Title')`
 
 To track an Event:
-* `GoogleAnalytics.trackEvent('Category', 'Action', 'Label', Value)` Label and Value are optional, Value is numeric
+* `GA.trackEvent('Category', 'Action', 'Label', Value)` Label and Value are optional, Value is numeric
 
 To track an Exception:
-* `GoogleAnalytics.trackException('Description', Fatal)` where Fatal is boolean
+* `GA.trackException('Description', Fatal)` where Fatal is boolean
 
 To track User Timing (App Speed):
-* `GoogleAnalytics.trackTiming('Category', IntervalInMilliseconds, 'Variable', 'Label')` where IntervalInMilliseconds is numeric
+* `GA.trackTiming('Category', IntervalInMilliseconds, 'Variable', 'Label')` where IntervalInMilliseconds is numeric
 
 To add a Transaction (Ecommerce)
-* `GoogleAnalytics.addTransaction('ID', 'Affiliation', Revenue, Tax, Shipping, 'Currency Code')` where Revenue, Tax, and Shipping are numeric
+* `GA.addTransaction('ID', 'Affiliation', Revenue, Tax, Shipping, 'Currency Code')` where Revenue, Tax, and Shipping are numeric
 
 To add a Transaction Item (Ecommerce)
-* `GoogleAnalytics.addTransactionItem('ID', 'Name', 'SKU', 'Category', Price, Quantity, 'Currency Code')` where Price and Quantity are numeric
+* `GA.addTransactionItem('ID', 'Name', 'SKU', 'Category', Price, Quantity, 'Currency Code')` where Price and Quantity are numeric
 
 To add a Custom Dimension
-* `GoogleAnalytics.addCustomDimension('Key', 'Value', success, error)`
+* `GA.addCustomDimension('Key', 'Value', success, error)`
 
 To set a UserId:
-* `GoogleAnalytics.setUserId('my-user-id')`
+* `GA.setUserId('my-user-id')`
 
 To enable verbose logging:
-* `GoogleAnalytics.debugMode()`
+* `GA.debugMode()`
 
 To enable/disable automatic reporting of uncaught exceptions
-* `GoogleAnalytics.enableUncaughtExceptionReporting(Enable, success, error)` where Enable is boolean
+* `GA.enableUncaughtExceptionReporting(Enable, success, error)` where Enable is boolean
 
 #Installing Without the CLI <a name="nocli"></a>
 Copy the files manually into your project and add the following to your config.xml files:
