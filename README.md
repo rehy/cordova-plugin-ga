@@ -34,12 +34,6 @@ To track an Exception:
 To track User Timing (App Speed):
 * `GA.trackTiming('Category', IntervalInMilliseconds, 'Variable', 'Label')` where IntervalInMilliseconds is numeric
 
-To add a Transaction (Ecommerce)
-* `GA.addTransaction('ID', 'Affiliation', Revenue, Tax, Shipping, 'Currency Code')` where Revenue, Tax, and Shipping are numeric
-
-To add a Transaction Item (Ecommerce)
-* `GA.addTransactionItem('ID', 'Name', 'SKU', 'Category', Price, Quantity, 'Currency Code')` where Price and Quantity are numeric
-
 To add a Custom Dimension
 * `GA.addCustomDimension('Key', 'Value', success, error)`
 

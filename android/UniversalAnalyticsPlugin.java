@@ -2,7 +2,6 @@ package com.danielcwilson.plugins.analytics;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Logger.LogLevel;
 import com.google.android.gms.analytics.Tracker;
 
 import org.apache.cordova.CallbackContext;
@@ -22,8 +21,6 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
     public static final String TRACK_EXCEPTION = "trackException";
     public static final String TRACK_TIMING = "trackTiming";
     public static final String ADD_DIMENSION = "addCustomDimension";
-    public static final String ADD_TRANSACTION = "addTransaction";
-    public static final String ADD_TRANSACTION_ITEM = "addTransactionItem";
 
     public static final String SET_USER_ID = "setUserId";
     public static final String ENABLE_UNCAUGHT_EXCEPTION_REPORTING = "enableUncaughtExceptionReporting";
@@ -69,33 +66,6 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
             Integer key = args.getInt(0);
             String value = args.getString(1);
             this.addCustomDimension(key, value, callbackContext);
-            return true;
-        } else if (ADD_TRANSACTION.equals(action)) {
-            int length = args.length();
-            if (length > 0) {
-                this.addTransaction(
-                        args.getString(0),
-                        length > 1 ? args.getString(1) : "",
-                        length > 2 ? args.getDouble(2) : 0,
-                        length > 3 ? args.getDouble(3) : 0,
-                        length > 4 ? args.getDouble(4) : 0,
-                        length > 5 ? args.getString(5) : null,
-                        callbackContext);
-            }
-            return true;
-        } else if (ADD_TRANSACTION_ITEM.equals(action)) {
-            int length = args.length();
-            if (length > 0) {
-                this.addTransactionItem(
-                        args.getString(0),
-                        length > 1 ? args.getString(1) : "",
-                        length > 2 ? args.getString(2) : "",
-                        length > 3 ? args.getString(3) : "",
-                        length > 4 ? args.getDouble(4) : 0,
-                        length > 5 ? args.getLong(5) : 0,
-                        length > 6 ? args.getString(6) : null,
-                        callbackContext);
-            }
             return true;
         } else if (SET_USER_ID.equals(action)) {
             String userId = args.getString(0);
@@ -163,7 +133,7 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
         if (null != screenname && screenname.length() > 0) {
             tracker.setScreenName(screenname);
 
-            HitBuilders.AppViewBuilder hitBuilder = new HitBuilders.AppViewBuilder();
+            HitBuilders.ScreenViewBuilder hitBuilder = new HitBuilders.ScreenViewBuilder();
             addCustomDimensionsToHitBuilder(hitBuilder);
 
             tracker.send(hitBuilder.build());
@@ -237,56 +207,6 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
             callbackContext.success("Track Timing: " + category);
         } else {
             callbackContext.error("Expected non-empty string arguments.");
-        }
-    }
-
-    private void addTransaction(String id, String affiliation, double revenue, double tax, double shipping, String currencyCode, CallbackContext callbackContext) {
-        if (!trackerStarted) {
-            callbackContext.error("Tracker not started");
-            return;
-        }
-
-        if (null != id && id.length() > 0) {
-            HitBuilders.TransactionBuilder hitBuilder = new HitBuilders.TransactionBuilder();
-            addCustomDimensionsToHitBuilder(hitBuilder);
-
-            tracker.send(hitBuilder
-                    .setTransactionId(id)
-                    .setAffiliation(affiliation)
-                    .setRevenue(revenue).setTax(tax)
-                    .setShipping(shipping)
-                    .setCurrencyCode(currencyCode)
-                    .build()
-            ); //Deprecated
-            callbackContext.success("Add Transaction: " + id);
-        } else {
-            callbackContext.error("Expected non-empty ID.");
-        }
-    }
-
-    private void addTransactionItem(String id, String name, String sku, String category, double price, long quantity, String currencyCode, CallbackContext callbackContext) {
-        if (!trackerStarted) {
-            callbackContext.error("Tracker not started");
-            return;
-        }
-
-        if (null != id && id.length() > 0) {
-            HitBuilders.ItemBuilder hitBuilder = new HitBuilders.ItemBuilder();
-            addCustomDimensionsToHitBuilder(hitBuilder);
-
-            tracker.send(hitBuilder
-                    .setTransactionId(id)
-                    .setName(name)
-                    .setSku(sku)
-                    .setCategory(category)
-                    .setPrice(price)
-                    .setQuantity(quantity)
-                    .setCurrencyCode(currencyCode)
-                    .build()
-            ); //Deprecated
-            callbackContext.success("Add Transaction Item: " + id);
-        } else {
-            callbackContext.error("Expected non-empty ID.");
         }
     }
 
