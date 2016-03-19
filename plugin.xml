@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns:android="http://schemas.android.com/apk/res/android"
-    id="cordova-plugin-ga" version="1.2.0"
+    id="cordova-plugin-ga" version="1.3.0"
     xmlns="http://apache.org/cordova/ns/plugins/1.0">
     <engines>
         <engine name="cordova" version=">=3.0.0" />
