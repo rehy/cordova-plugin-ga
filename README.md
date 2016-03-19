@@ -46,9 +46,6 @@ To add a Custom Dimension
 To set a UserId:
 * `GA.setUserId('my-user-id')`
 
-To enable verbose logging:
-* `GA.debugMode()`
-
 To enable/disable automatic reporting of uncaught exceptions
 * `GA.enableUncaughtExceptionReporting(Enable, success, error)` where Enable is boolean
 

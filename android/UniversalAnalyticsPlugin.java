@@ -26,11 +26,9 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
     public static final String ADD_TRANSACTION_ITEM = "addTransactionItem";
 
     public static final String SET_USER_ID = "setUserId";
-    public static final String DEBUG_MODE = "debugMode";
     public static final String ENABLE_UNCAUGHT_EXCEPTION_REPORTING = "enableUncaughtExceptionReporting";
 
     public Boolean trackerStarted = false;
-    public Boolean debugModeEnabled = false;
     public HashMap<Integer, String> customDimensions = new HashMap<Integer, String>();
 
     public Tracker tracker;
@@ -102,8 +100,6 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
         } else if (SET_USER_ID.equals(action)) {
             String userId = args.getString(0);
             this.setUserId(userId, callbackContext);
-        } else if (DEBUG_MODE.equals(action)) {
-            this.debugMode(callbackContext);
         } else if (ENABLE_UNCAUGHT_EXCEPTION_REPORTING.equals(action)) {
             Boolean enable = args.getBoolean(0);
             this.enableUncaughtExceptionReporting(enable, callbackContext);
@@ -292,13 +288,6 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
         } else {
             callbackContext.error("Expected non-empty ID.");
         }
-    }
-
-    private void debugMode(CallbackContext callbackContext) {
-        GoogleAnalytics.getInstance(this.cordova.getActivity()).getLogger().setLogLevel(LogLevel.VERBOSE);
-
-        this.debugModeEnabled = true;
-        callbackContext.success("debugMode enabled");
     }
 
     private void setUserId(String userId, CallbackContext callbackContext) {
