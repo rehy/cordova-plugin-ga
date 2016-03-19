@@ -1,13 +1,12 @@
 package com.danielcwilson.plugins.analytics;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Logger.LogLevel;
 import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Logger.LogLevel;
 import com.google.android.gms.analytics.Tracker;
 
-import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
-
+import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -52,9 +51,9 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
                 this.trackEvent(
                         args.getString(0),
                         length > 1 ? args.getString(1) : "",
-                                length > 2 ? args.getString(2) : "",
-                                        length > 3 ? args.getLong(3) : 0,
-                                                callbackContext);
+                        length > 2 ? args.getString(2) : "",
+                        length > 3 ? args.getLong(3) : 0,
+                        callbackContext);
             }
             return true;
         } else if (TRACK_EXCEPTION.equals(action)) {
@@ -79,11 +78,11 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
                 this.addTransaction(
                         args.getString(0),
                         length > 1 ? args.getString(1) : "",
-                                length > 2 ? args.getDouble(2) : 0,
-                                        length > 3 ? args.getDouble(3) : 0,
-                                                length > 4 ? args.getDouble(4) : 0,
-                                                        length > 5 ? args.getString(5) : null,
-                                                                callbackContext);
+                        length > 2 ? args.getDouble(2) : 0,
+                        length > 3 ? args.getDouble(3) : 0,
+                        length > 4 ? args.getDouble(4) : 0,
+                        length > 5 ? args.getString(5) : null,
+                        callbackContext);
             }
             return true;
         } else if (ADD_TRANSACTION_ITEM.equals(action)) {
@@ -92,12 +91,12 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
                 this.addTransactionItem(
                         args.getString(0),
                         length > 1 ? args.getString(1) : "",
-                                length > 2 ? args.getString(2) : "",
-                                        length > 3 ? args.getString(3) : "",
-                                                length > 4 ? args.getDouble(4) : 0,
-                                                        length > 5 ? args.getLong(5) : 0,
-                                                                length > 6 ? args.getString(6) : null,
-                                                                        callbackContext);
+                        length > 2 ? args.getString(2) : "",
+                        length > 3 ? args.getString(3) : "",
+                        length > 4 ? args.getDouble(4) : 0,
+                        length > 5 ? args.getLong(5) : 0,
+                        length > 6 ? args.getString(6) : null,
+                        callbackContext);
             }
             return true;
         } else if (SET_USER_ID.equals(action)) {
@@ -128,12 +127,12 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
             callbackContext.error("Expected positive integer argument for key.");
             return;
         }
-    	
+
         if (null == value || value.length() == 0) {
             callbackContext.error("Expected non-empty string argument for value.");
             return;
         }
-    		
+
         customDimensions.put(key, value);
         callbackContext.success("custom dimension started");
     }
@@ -143,16 +142,16 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
         //the common setCustomDimension (int index, String dimension) method
         try {
             Method builderMethod = builder.getClass().getMethod("setCustomDimension", Integer.TYPE, String.class);
-	    	
+
             for (Entry<Integer, String> entry : customDimensions.entrySet()) {
-	            Integer key = entry.getKey();
-	            String value = entry.getValue();
-	            try {
-	                builderMethod.invoke(builder, (key), value);
-	            } catch (IllegalArgumentException e) {
-	            } catch (IllegalAccessException e) {
-	            } catch (InvocationTargetException e) {
-	            }
+                Integer key = entry.getKey();
+                String value = entry.getValue();
+                try {
+                    builderMethod.invoke(builder, (key), value);
+                } catch (IllegalArgumentException e) {
+                } catch (IllegalAccessException e) {
+                } catch (InvocationTargetException e) {
+                }
             }
         } catch (SecurityException e) {
         } catch (NoSuchMethodException e) {
@@ -160,17 +159,17 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
     }
 
     private void trackView(String screenname, CallbackContext callbackContext) {
-        if (! trackerStarted ) {
+        if (!trackerStarted) {
             callbackContext.error("Tracker not started");
             return;
         }
 
         if (null != screenname && screenname.length() > 0) {
             tracker.setScreenName(screenname);
-            
+
             HitBuilders.AppViewBuilder hitBuilder = new HitBuilders.AppViewBuilder();
             addCustomDimensionsToHitBuilder(hitBuilder);
-            
+
             tracker.send(hitBuilder.build());
             callbackContext.success("Track Screen: " + screenname);
         } else {
@@ -179,7 +178,7 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
     }
 
     private void trackEvent(String category, String action, String label, long value, CallbackContext callbackContext) {
-        if (! trackerStarted ) {
+        if (!trackerStarted) {
             callbackContext.error("Tracker not started");
             return;
         }
@@ -187,14 +186,14 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
         if (null != category && category.length() > 0) {
             HitBuilders.EventBuilder hitBuilder = new HitBuilders.EventBuilder();
             addCustomDimensionsToHitBuilder(hitBuilder);
-            
+
             tracker.send(hitBuilder
                     .setCategory(category)
                     .setAction(action)
                     .setLabel(label)
                     .setValue(value)
                     .build()
-                    );
+            );
             callbackContext.success("Track Event: " + category);
         } else {
             callbackContext.error("Expected non-empty string arguments.");
@@ -202,7 +201,7 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
     }
 
     private void trackException(String description, Boolean fatal, CallbackContext callbackContext) {
-        if (! trackerStarted ) {
+        if (!trackerStarted) {
             callbackContext.error("Tracker not started");
             return;
         }
@@ -210,12 +209,12 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
         if (null != description && description.length() > 0) {
             HitBuilders.ExceptionBuilder hitBuilder = new HitBuilders.ExceptionBuilder();
             addCustomDimensionsToHitBuilder(hitBuilder);
-        	
+
             tracker.send(hitBuilder
                     .setDescription(description)
                     .setFatal(fatal)
                     .build()
-                    );
+            );
             callbackContext.success("Track Exception: " + description);
         } else {
             callbackContext.error("Expected non-empty string arguments.");
@@ -231,14 +230,14 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
         if (null != category && category.length() > 0) {
             HitBuilders.TimingBuilder hitBuilder = new HitBuilders.TimingBuilder();
             addCustomDimensionsToHitBuilder(hitBuilder);
-        	
+
             tracker.send(hitBuilder
                     .setCategory(category)
                     .setValue(intervalInMilliseconds)
                     .setVariable(name)
                     .setLabel(label)
                     .build()
-                    );
+            );
             callbackContext.success("Track Timing: " + category);
         } else {
             callbackContext.error("Expected non-empty string arguments.");
@@ -254,7 +253,7 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
         if (null != id && id.length() > 0) {
             HitBuilders.TransactionBuilder hitBuilder = new HitBuilders.TransactionBuilder();
             addCustomDimensionsToHitBuilder(hitBuilder);
-        	
+
             tracker.send(hitBuilder
                     .setTransactionId(id)
                     .setAffiliation(affiliation)
@@ -262,7 +261,7 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
                     .setShipping(shipping)
                     .setCurrencyCode(currencyCode)
                     .build()
-                    ); //Deprecated
+            ); //Deprecated
             callbackContext.success("Add Transaction: " + id);
         } else {
             callbackContext.error("Expected non-empty ID.");
@@ -288,7 +287,7 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
                     .setQuantity(quantity)
                     .setCurrencyCode(currencyCode)
                     .build()
-                    ); //Deprecated
+            ); //Deprecated
             callbackContext.success("Add Transaction Item: " + id);
         } else {
             callbackContext.error("Expected non-empty ID.");
@@ -303,7 +302,7 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
     }
 
     private void setUserId(String userId, CallbackContext callbackContext) {
-        if (! trackerStarted ) {
+        if (!trackerStarted) {
             callbackContext.error("Tracker not started");
             return;
         }
@@ -311,9 +310,9 @@ public class UniversalAnalyticsPlugin extends CordovaPlugin {
         tracker.set("&uid", userId);
         callbackContext.success("Set user id" + userId);
     }
-    
+
     private void enableUncaughtExceptionReporting(Boolean enable, CallbackContext callbackContext) {
-        if (! trackerStarted ) {
+        if (!trackerStarted) {
             callbackContext.error("Tracker not started");
             return;
         }
