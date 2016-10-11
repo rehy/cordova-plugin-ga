@@ -11,7 +11,7 @@ Prerequisites:
 ## Installing
 
 ```bash
-cordova plugin add cordova-plugin-ga
+cordova plugin add cordova-plugin-ga --save
 ```
 
 The plugin.xml file will add the Google Analytics SDK files for Android and/or iOS. Make sure to review the Google Analytics [terms](https://www.google.com/analytics/terms/us.html) and [SDK Policy](https://developers.google.com/analytics/devguides/collection/protocol/policy)
