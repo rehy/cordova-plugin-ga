@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-ga",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Google Universal Analytics Cordova Plugin",
   "scripts": {
     "version": "sync-package-version --cordova-plugin"
