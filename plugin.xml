@@ -6,14 +6,20 @@
     <engine name="cordova" version=">=3.0.0" />
   </engines>
   <name>Google Universal Analytics Plugin</name>
-  <description>Simple tracking (screens/events) for Google Analytics SDK 3.14 (iOS), SDK 4.0 (Android), and WP8</description>
+  <description>Simple tracking (screens/events) for Google Analytics SDK 3.14 (iOS), SDK 4.0 (Android), Browsers and WP8</description>
   <author>Ratson</author>
   <license>MIT License</license>
   <js-module src="www/analytics.js" name="UniversalAnalytics">
+    <clobbers target="ga" />
     <!-- 'GA' is deprecated, but supported to ease the transition -->
     <clobbers target="GA" />
-    <clobbers target="ga" />
   </js-module>
+
+  <platform name="browser">
+    <js-module src="browser/UniversalAnalyticsProxy.js" name="UniversalAnalyticsProxy">
+      <runs />
+    </js-module>
+  </platform>
 
   <platform name="ios">
     <config-file target="config.xml" parent="/*">

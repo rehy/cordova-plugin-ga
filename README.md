@@ -4,13 +4,22 @@ cordova-plugin-ga
 Cordova (PhoneGap) 3.0+ Plugin to connect to Google's native Universal Analytics SDK
 
 Prerequisites:
-* A Cordova 3.0+ project for iOS, Android and/or Windows Phone 8
+* A Cordova 3.0+ project for iOS, Android, browser (PWA), and/or Windows Phone 8
 * A Mobile App property through the Google Analytics Admin Console
 * (Android) Google Play Services SDK installed via [Android SDK Manager](https://developer.android.com/sdk/installing/adding-packages.html)
 
+## Why fork
+
+This is a fork of [cordova-plugin-google-analytics](https://github.com/danwilson/google-analytics-plugin), which was not active maintained before. Since the project is more active, this fork is less relevant now.
+
+### Difference from upstream
+
+- Remove `window.analytics`
+- Export `window.GA`, but the newly added `window.ga` is recommended.
+
 ## Installing
 
-```bash
+```sh
 cordova plugin add cordova-plugin-ga --save
 ```
 
@@ -19,7 +28,7 @@ The plugin.xml file will add the Google Analytics SDK files for Android and/or i
 ## JavaScript Usage
 In your 'deviceready' handler, set up your Analytics tracker:
 
-* `window.ga.startTrackerWithId('UA-XXXX-YY')` where UA-XXXX-YY is your Google Analytics Mobile App property
+* `window.ga.startTrackerWithId('UA-XXXX-YY', 30)` where UA-XXXX-YY is your Google Analytics Mobile App property and 30 is the dispatch period (optional)
 
 To track a Screen (PageView):
 * `window.ga.trackView('Screen Title')`
@@ -73,12 +82,3 @@ To enable verbose logging:
 
 To enable/disable automatic reporting of uncaught exceptions
 * `window.ga.enableUncaughtExceptionReporting(Enable, success, error)` where Enable is boolean
-
-## Why fork
-
-This is a fork of [cordova-plugin-google-analytics](https://github.com/danwilson/google-analytics-plugin), which was not active maintained before. Since the project is more active, this fork is less relevant now.
-
-### Difference from upstream
-
-- Remove `window.analytics`
-- Export `window.GA`, but the newly added `window.ga` is recommended.
